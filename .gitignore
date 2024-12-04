@@ -7,6 +7,10 @@
 appsettings.Development.json
 appsettings.json
 
+#My .md files
+TODO.md
+
+
 # dotenv files
 .env
 
