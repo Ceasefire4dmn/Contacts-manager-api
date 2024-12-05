@@ -1,7 +1,4 @@
-using System.Data.SqlTypes;
-using Bogus.DataSets;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 
 public class ContactManagementController : BaseController
 {
@@ -11,72 +8,44 @@ public class ContactManagementController : BaseController
         this.Storage = Storage;
     }
 
-
     [HttpPost("contacts")]
     public IActionResult CreateContact([FromBody] Contact contact)
     {
-        if (contact.Id.GetType() != typeof(Guid))
-        {
-            contact.Id = new Guid();
-        }
-
-        if (string.IsNullOrWhiteSpace(contact.Name))
-        {
-            contact.Name = $"Unknown.{DateTime.Now}"; 
-        }
-        if (string.IsNullOrWhiteSpace(contact.Email))
-        {
-            contact.Email = "Unknown email";
-        }
-
-        if (string.IsNullOrWhiteSpace(contact.PhoneNumber))
-        {
-            contact.PhoneNumber = "Not provided";
-        }
-
-        Storage.Contacts.Add(contact);
-        
-        return Ok($"Contact {contact.Name} created successfully on {DateTime.Now.ToString("D")}.");
+        Storage.CreateContact(contact);
+        return Created($"http://localhost:5000/api/ContactManagement/contacts/{contact.Id}", contact);
     }
 
     [HttpGet("contacts")]
-    public IActionResult GetContactsFullInfo()
+    public ActionResult<List<Contact>> GetAllContacts()
     {
-        if (Storage.Contacts.Count == 0) return Ok("Список контактов пуст!");
+        var ContactsData = Storage.GetAllContacts();
 
-        return Ok(Storage.Contacts);
+        if (ContactsData.Count == 0) return Conflict("Список контактов пуст!");
+
+        return Ok(ContactsData);
+    }
+
+    [HttpGet("contacts/{id}")]
+    public IActionResult GetContactById(string id)
+    {
+        var tuple = Storage.GetContactById(id);
+
+        if (!tuple.Item1) return BadRequest("Введен неккоректный ID. Необходим формат GUID.");
+
+        return tuple.Item2 is not null ? Ok(tuple.Item2) : NotFound("Контакт не найден!");
     }
 
     [HttpDelete("contacts/{id}")]
     public IActionResult DeleteContact(Guid id)
     {
-        Contact? contact = Storage.Contacts.FirstOrDefault(c => c.Id == id);
+        var result = Storage.DeleteContact(id);
 
-        if (contact == null) return Ok("Такого контакта нет!");
-
-        Storage.Contacts.Remove(contact);
-        return Ok($"Контакт {contact.Name} успешно удалён");
+        return result is not null ? Ok($"Контакт {result.Name} успешно удалён") : NotFound("Такого контакта нет!");
     }
 
     [HttpPut("contacts/{id}")]
     public IActionResult UpdateContact([FromBody] ContactDto updatedContact, Guid id)
     {
-        var contact = Storage.Contacts.FirstOrDefault(c => c.Id == id);
-
-        if (contact == null) return NotFound("Contact Not Found");
-
-        if (string.IsNullOrWhiteSpace(updatedContact.Name) && string.IsNullOrEmpty(updatedContact.Email) && string.IsNullOrEmpty(updatedContact.PhoneNumber))
-        {
-            return Ok("Нет изменений для внесения в данный контакт");
-        }
-
-        if (!string.IsNullOrWhiteSpace(updatedContact.Name)) contact.Name = updatedContact.Name;
-
-        if (!string.IsNullOrWhiteSpace(updatedContact.PhoneNumber)) contact.PhoneNumber = updatedContact.PhoneNumber;
-
-        if (!string.IsNullOrWhiteSpace(updatedContact.Email)) contact.Email = updatedContact.Email;
-
-        return Ok("Изменения внесены!");
-
+        return Storage.UpdateContact(updatedContact, id) ? Ok("Изменения внесены!") : NotFound("Contact Not Found");
     }
 }
