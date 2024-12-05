@@ -1,4 +1,7 @@
+using System.Data.SqlTypes;
+using Bogus.DataSets;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 
 public class ContactManagementController : BaseController
 {
@@ -8,8 +11,9 @@ public class ContactManagementController : BaseController
         this.Storage = Storage;
     }
 
+
     [HttpPost("contacts")]
-    public IActionResult CreateContact(Contact contact)
+    public IActionResult CreateContact([FromBody] Contact contact)
     {
         if (contact.Id.GetType() != typeof(Guid))
         {
@@ -52,5 +56,27 @@ public class ContactManagementController : BaseController
 
         Storage.Contacts.Remove(contact);
         return Ok($"Контакт {contact.Name} успешно удалён");
+    }
+
+    [HttpPut("contacts/{id}")]
+    public IActionResult UpdateContact([FromBody] ContactDto updatedContact, Guid id)
+    {
+        var contact = Storage.Contacts.FirstOrDefault(c => c.Id == id);
+
+        if (contact == null) return NotFound("Contact Not Found");
+
+        if (string.IsNullOrWhiteSpace(updatedContact.Name) && string.IsNullOrEmpty(updatedContact.Email) && string.IsNullOrEmpty(updatedContact.PhoneNumber))
+        {
+            return Ok("Нет изменений для внесения в данный контакт");
+        }
+
+        if (!string.IsNullOrWhiteSpace(updatedContact.Name)) contact.Name = updatedContact.Name;
+
+        if (!string.IsNullOrWhiteSpace(updatedContact.PhoneNumber)) contact.PhoneNumber = updatedContact.PhoneNumber;
+
+        if (!string.IsNullOrWhiteSpace(updatedContact.Email)) contact.Email = updatedContact.Email;
+
+        return Ok("Изменения внесены!");
+
     }
 }
