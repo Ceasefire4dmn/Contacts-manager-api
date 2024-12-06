@@ -11,8 +11,9 @@ public class ContactManagementController : BaseController
     [HttpPost("contacts")]
     public IActionResult CreateContact([FromBody] Contact contact)
     {
-        Storage.CreateContact(contact);
-        return Created($"http://localhost:5000/api/ContactManagement/contacts/{contact.Id}", contact);
+        return Storage.CreateContact(contact)
+            ? Created($"http://localhost:5000/api/ContactManagement/contacts/{contact.Id}", contact)
+            : Conflict($"Произошла ошибка при добавлении контакта {contact.Name}");
     }
 
     [HttpGet("contacts")]
@@ -28,11 +29,14 @@ public class ContactManagementController : BaseController
     [HttpGet("contacts/{id}")]
     public IActionResult GetContactById(string id)
     {
-        var tuple = Storage.GetContactById(id);
+        (bool IsGuid, Contact contact) =  Storage.GetContactById(id);
 
-        if (!tuple.Item1) return BadRequest("Введен неккоректный ID. Необходим формат GUID.");
+        if (!IsGuid) 
+            return BadRequest("Введен неккоректный ID. Необходим формат GUID.");
 
-        return tuple.Item2 is not null ? Ok(tuple.Item2) : NotFound("Контакт не найден!");
+        return contact is not null 
+            ? Ok(contact) 
+            : NotFound("Контакт не найден!");
     }
 
     [HttpDelete("contacts/{id}")]
@@ -40,12 +44,16 @@ public class ContactManagementController : BaseController
     {
         var result = Storage.DeleteContact(id);
 
-        return result is not null ? Ok($"Контакт {result.Name} успешно удалён") : NotFound("Такого контакта нет!");
+        return result 
+            ? NoContent()
+            : NotFound(new {Error = "Контакта с таким ID не существует!"});
     }
 
     [HttpPut("contacts/{id}")]
     public IActionResult UpdateContact([FromBody] ContactDto updatedContact, Guid id)
     {
-        return Storage.UpdateContact(updatedContact, id) ? Ok("Изменения внесены!") : NotFound("Contact Not Found");
+        return Storage.UpdateContact(updatedContact, id)
+            ? Ok() 
+            : NotFound();
     }
 }

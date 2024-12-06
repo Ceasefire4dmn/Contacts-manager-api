@@ -20,7 +20,7 @@ public class ContactStorage
         }
     }
 
-    public string CreateContact(Contact contact)
+    public bool CreateContact(Contact contact)
     {
         Guid potentialId = Guid.NewGuid();
         while(Contacts.FirstOrDefault(c => c.Id == potentialId) != null) 
@@ -46,7 +46,7 @@ public class ContactStorage
 
         Contacts.Add(contact);
 
-        return $"Contact {contact.Name} created successfully on {DateTime.Now.ToString("D")}.";
+        return true;
 
     }
 
@@ -61,17 +61,19 @@ public class ContactStorage
     {
         bool IsGuid = Guid.TryParse(id, out Guid potentialId);
 
-        return IsGuid ? (IsGuid, Contacts.FirstOrDefault(c => c.Id == potentialId)) : (IsGuid, null);
+        return IsGuid 
+            ? (IsGuid, Contacts.FirstOrDefault(c => c.Id == potentialId)) 
+            : (IsGuid, null);
     }
-    public Contact DeleteContact(Guid id)
+    public bool DeleteContact(Guid id)
     {
         var contact = Contacts.FirstOrDefault(c => c.Id == id);
 
-        if (contact == null) return null;
+        if (contact == null) return false;
 
         Contacts.Remove(contact);
 
-        return contact;
+        return true;
 
     }
 
