@@ -20,6 +20,8 @@ builder.Services.AddSingleton<ContactStorage>();
 
 var app = builder.Build();
 
+
+
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapControllers();
