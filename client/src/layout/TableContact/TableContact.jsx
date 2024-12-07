@@ -1,5 +1,5 @@
+import React from 'react'; 
 import "bootstrap/dist/css/bootstrap.min.css";
-import React from 'react';
 import RowContact from "../components/RowContact";
 
 
@@ -11,6 +11,7 @@ function TableContact(props) {
                 <tr>
                     <th>ID</th>
                     <th>Имя контакта</th>
+                    <th>Номер телефона</th>
                     <th>Email</th>
                 </tr>
             </thead>
@@ -19,6 +20,7 @@ function TableContact(props) {
                     props.contacts.map(contact => <RowContact key={contact.ContactId}
                         ContactId={contact.ContactId}
                         ContactName={contact.ContactName}
+                        ContactPhoneNumber={contact.ContactPhoneNumber}
                         ContactEmail={contact.ContactEmail}
                     />)
                 }
