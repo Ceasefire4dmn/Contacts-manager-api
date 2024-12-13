@@ -1,10 +1,13 @@
+import axios from "axios";
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import TableContact from "./layout/TableContact/TableContact";
 import ContactCreationForm from "./layout/ContactCreationForm/ContactCreationForm";
 
+const baseApiUrl = process.env.REACT_APP_API_URL;
 function App() {
+
   const [contacts, setContacts] = useState([
     {
       ContactId: "d76acdac-e8d9-42cf-b0f1-31122b9e7afc",
@@ -31,6 +34,10 @@ function App() {
       ContactEmail: "t0KQ3@example.com",
     },
   ]);
+
+  const contactsUrl = `${baseApiUrl}/contacts`;
+
+  axios.get(contactsUrl).then((res) => console.log(res.data));  
 
   const addContact = (props) => {
     const newContact = props;
