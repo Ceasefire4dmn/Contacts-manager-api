@@ -33,6 +33,15 @@ const RowContact = (props) => {
             <th>{props.ContactName}</th>
             <th>{props.ContactPhoneNumber}</th>
             <th>{props.ContactEmail}</th>
+            <th>
+                <button
+                    type="button"
+                    className="btn btn-outline-success"
+                    onClick={() => props.deleteContact(props.ContactId)}
+                >
+                    &#x1F5D1;
+                </button>
+            </th>
         </tr>
     );
 };

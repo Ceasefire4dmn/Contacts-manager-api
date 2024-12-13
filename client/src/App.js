@@ -37,6 +37,11 @@ function App() {
     setContacts([...contacts, newContact]);
   };
 
+  // deleteContact - method for deleting contact which will be called from RowContact
+  const deleteContact = (contactId) => {
+    setContacts(contacts.filter((contact) => contact.ContactId !== contactId));
+  };
+
   const [isFormVisible, setIsFormVisible] = useState(false);
   const toggleFormVisibility = () => {
     setIsFormVisible(!isFormVisible);
@@ -45,13 +50,20 @@ function App() {
   return (
     <div className="container mt-5">
       <div className="card">
+        {/* Header */}
         <div>
           <h2 className="card-header">Список контактов</h2>
         </div>
 
+        {/* Contacts */}
         <div className="card-body">
-          <TableContact contacts={contacts} />
+          <TableContact 
+            contacts={contacts} 
+            // passing deleteContact method through props into TableContact and then passing it to RowContact and then calling it from RowContact
+            deleteContact={deleteContact} 
+          />
 
+          {/* Button for adding contact */}
           <div>
             <button
               className="btn btn-success mb-3"

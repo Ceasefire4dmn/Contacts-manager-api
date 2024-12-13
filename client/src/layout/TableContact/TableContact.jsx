@@ -22,6 +22,8 @@ function TableContact(props) {
                         ContactName={contact.ContactName}
                         ContactPhoneNumber={contact.ContactPhoneNumber}
                         ContactEmail={contact.ContactEmail}
+                        // deleteContact - method for deleting contact which will be called from RowContact
+                        deleteContact={props.deleteContact}
                     />)
                 }
             </tbody>
