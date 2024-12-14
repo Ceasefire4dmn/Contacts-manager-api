@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
-
 const ContactCreationForm = ({ submitted, visible }) => {
 
     const [name, setName] = useState("");
@@ -15,10 +13,10 @@ const ContactCreationForm = ({ submitted, visible }) => {
 
         if (name !== "" && phoneNumber !== "" && email !== "") {
             submitted({
-                ContactId: crypto.randomUUID(),
-                ContactName: name,
-                ContactPhoneNumber: phoneNumber,
-                ContactEmail: email,
+                id: crypto.randomUUID(),
+                name: name,
+                phoneNumber: phoneNumber,
+                email: email,
             });
 
             setName("");

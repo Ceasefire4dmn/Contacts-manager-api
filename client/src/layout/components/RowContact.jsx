@@ -16,9 +16,7 @@ const RowContact = (props) => {
     return (
         <tr>
             <th>
-                
                 {displayId}
-
                 <button
                     type="button"
                     className="btn btn-outline-success ms-3"

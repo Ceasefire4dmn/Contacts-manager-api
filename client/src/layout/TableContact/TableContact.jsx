@@ -17,11 +17,18 @@ function TableContact(props) {
             </thead>
             <tbody>
                 {
-                    props.contacts.map(contact => <RowContact key={contact.ContactId}
-                        ContactId={contact.ContactId}
-                        ContactName={contact.ContactName}
-                        ContactPhoneNumber={contact.ContactPhoneNumber}
-                        ContactEmail={contact.ContactEmail}
+                    props.contacts.map(contact => 
+                    <RowContact 
+                        // Attributes
+                        key={contact.ContactId}
+                        
+                        // Properties
+                        ContactId={contact.id}
+                        ContactName={contact.name}
+                        ContactPhoneNumber={contact.phoneNumber}
+                        ContactEmail={contact.email}
+                        
+                        // Methods:
                         // deleteContact - method for deleting contact which will be called from RowContact
                         deleteContact={props.deleteContact}
                     />)

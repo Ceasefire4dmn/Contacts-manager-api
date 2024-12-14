@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import TableContact from "./layout/TableContact/TableContact";
@@ -8,45 +8,29 @@ import ContactCreationForm from "./layout/ContactCreationForm/ContactCreationFor
 const baseApiUrl = process.env.REACT_APP_API_URL;
 function App() {
 
-  const [contacts, setContacts] = useState([
-    {
-      ContactId: "d76acdac-e8d9-42cf-b0f1-31122b9e7afc",
-      ContactName: "John Doe",
-      ContactPhoneNumber: "123-456-7890",
-      ContactEmail: "4b3uE@example.com",
-    },
-    {
-      ContactId: "2c5c3137-c447-4dfb-a6b3-85873dd64db5",
-      ContactName: "Jane Doe",
-      ContactPhoneNumber: "987-654-3210",
-      ContactEmail: "gYVb0@example.com",
-    },
-    {
-      ContactId: "3c5c3137-c447-4dfb-a6b3-85873dd64db5",
-      ContactName: "Bob Smith",
-      ContactPhoneNumber: "555-555-5555",
-      ContactEmail: "3oZiM@example.com",
-    },
-    {
-      ContactId: "4c5c3137-c447-4dfb-a6b3-85873dd64db5",
-      ContactName: "Alice Johnson",
-      ContactPhoneNumber: "777-777-7777",
-      ContactEmail: "t0KQ3@example.com",
-    },
-  ]);
+  const [contacts, setContacts] = useState([]);
 
   const contactsUrl = `${baseApiUrl}/contacts`;
 
-  axios.get(contactsUrl).then((res) => console.log(res.data));  
+  useEffect(() => {
+    axios
+      .get(contactsUrl)
+      .then((res) => setContacts(res.data));
+  }, []);
 
   const addContact = (props) => {
     const newContact = props;
+
+    axios.post(contactsUrl, newContact);
+
     setContacts([...contacts, newContact]);
   };
 
   // deleteContact - method for deleting contact which will be called from RowContact
   const deleteContact = (contactId) => {
-    setContacts(contacts.filter((contact) => contact.ContactId !== contactId));
+    axios.delete(`${contactsUrl}/${contactId}`);
+    
+    setContacts(contacts.filter((contact) => contact.id !== contactId));
   };
 
   const [isFormVisible, setIsFormVisible] = useState(false);
