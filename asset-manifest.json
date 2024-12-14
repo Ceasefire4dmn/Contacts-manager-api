@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Contacts-manager-api/static/css/main.49faa5e3.css",
+    "main.js": "/Contacts-manager-api/static/js/main.8a11462f.js",
+    "index.html": "/Contacts-manager-api/index.html",
+    "main.49faa5e3.css.map": "/Contacts-manager-api/static/css/main.49faa5e3.css.map",
+    "main.8a11462f.js.map": "/Contacts-manager-api/static/js/main.8a11462f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.49faa5e3.css",
+    "static/js/main.8a11462f.js"
+  ]
+}
