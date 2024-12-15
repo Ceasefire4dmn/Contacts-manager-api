@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "../../widgets/Header";
 import FormButton from "../../shared/ui/Button/FormButton";
 import TableContact from "./ui/TableContact";
-import NavMenu from "../../widgets/NavMenu";
 import { getContacts, addContact, deleteContact } from "../../shared/api/contacts";
 import "../../App.css";
 

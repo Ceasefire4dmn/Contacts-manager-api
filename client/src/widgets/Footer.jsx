@@ -7,7 +7,7 @@ function Footer() {
                 <Nav.Link style={{ color: "#ffffff" }} href="/home">Home</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-                <Nav.Link style={{ color: "#ffffff" }}  href="/">Contact List</Nav.Link>
+                <Nav.Link style={{ color: "#ffffff" }}  href="/contacts">Contact List</Nav.Link>
             </Nav.Item>
             <Nav.Item>
                 <Nav.Link style={{ color: "#ffffff" }}  href="/about">About</Nav.Link>

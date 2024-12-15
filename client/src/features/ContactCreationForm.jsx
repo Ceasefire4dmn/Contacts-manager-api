@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Component handle creation of contacts and defines is visible contact creation form or not. 
-const ContactCreationForm = ({ submitted, visible }) => {
+const ContactCreationForm = (props) => {
 
     // Handle dynamic filling and empting properties of contacts by using useState hooks
     const [name, setName] = useState("");
@@ -15,7 +15,7 @@ const ContactCreationForm = ({ submitted, visible }) => {
         event.preventDefault();
 
         if (name !== "" && phoneNumber !== "" && email !== "") {
-            submitted({
+            props.submitted({
                 id: crypto.randomUUID(),
                 name: name,
                 phoneNumber: phoneNumber,
@@ -26,72 +26,77 @@ const ContactCreationForm = ({ submitted, visible }) => {
             setPhoneNumber("");
             setEmail("");
 
-            visible();
+            props.visible();
         }
     };
 
     return (
         // Contact creation form
-        <form
-            onSubmit={handleSubmit}
+        <div
+            className="mt-4"
+            style={{width: "40%"}}    
         >
-            <div 
-                className="form-group"
+            <form
+                onSubmit={handleSubmit}
+            >
+                <div
+                    className="form-group"
                 // Contact's name field
-            >
-                <label htmlFor="name">
-                    Имя контакта
-                </label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required={true}
-                />
-            </div>
+                >
+                    <label htmlFor="name">
+                        Имя контакта
+                    </label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required={true}
+                    />
+                </div>
 
-            <div
-                className="form-group"
+                <div
+                    className="form-group"
                 // Contact's phone number field
-            >
-            <label htmlFor="phoneNumber">Номер телефона</label>
-            <input
-                type="text"
-                className="form-control"
-                id="phoneNumber"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                required={true}
-            />
-            </div>            
+                >
+                    <label htmlFor="phoneNumber">Номер телефона</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="phoneNumber"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        required={true}
+                    />
+                </div>
 
-            <div 
-                className="form-group"
+                <div
+                    className="form-group"
                 // Contact's email field
-            >
-                <label htmlFor="email">
-                    Email
-                </label>
-                <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required={true}
-                />
-            </div>
+                >
+                    <label htmlFor="email">
+                        Email
+                    </label>
+                    <input
+                        type="email"
+                        className="form-control"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required={true}
+                    />
+                </div>
 
-            <button
-                type="submit"
-                className="btn btn-success mt-3"
+                <button
+                    type="submit"
+                    className="btn btn-success mt-3"
                 // Button for creating new contact
-            >
-                Создать контакт
-            </button>
-        </form>
+                >
+                    Создать контакт
+                </button>
+            </form>
+        </div>
     );
 };
 

@@ -19,19 +19,19 @@ const NavMenu = () => {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link href="#action1">Home</Nav.Link>
-                        <Nav.Link href="/">Contact List</Nav.Link>
+                        <Nav.Link href="/">Home</Nav.Link>
+                        <Nav.Link href="/contacts">Contact List</Nav.Link>
                         <NavDropdown title="Action" id="navbarScrollingDropdown">
-                            <NavDropdown.Item href="#action3">Create new contact</NavDropdown.Item>
-                            <NavDropdown.Item href="#action4">
+                            <NavDropdown.Item href="/contacts/createContact">Create new contact</NavDropdown.Item>
+                            <NavDropdown.Item href="/contacts/updateContact">
                                 Update contact
                             </NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action5">
+                            <NavDropdown.Item href="/contacts/deleteContact">
                                 Delete contact
                             </NavDropdown.Item>
                         </NavDropdown>
-                        <Nav.Link href="about">
+                        <Nav.Link href="/about">
                             About
                         </Nav.Link>
                     </Nav>
