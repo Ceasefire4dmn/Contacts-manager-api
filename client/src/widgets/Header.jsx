@@ -1,10 +1,12 @@
 import React from "react";
 
-const Header = () =>
+const Header = (props) =>
 {
     return (
         <div>
-            <h2 className="card-header">Список контактов</h2>
+            <h2 className={`card-header text-center ${props.margin || "m-5"}`}>
+            {props.text || "Список контактов"}
+            </h2>
         </div>
     );
 };

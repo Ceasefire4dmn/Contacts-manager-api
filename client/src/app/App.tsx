@@ -1,13 +1,18 @@
 import React from "react";
+import "../App.css";
 // Import routers
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import About from "../pages/AboutPage/about";
 // Import pages
 import ContactListPage from "../pages/ContactPage";
-
+import About from "../pages/AboutPage/index";
+// Components
+import NavMenu from "../widgets/NavMenu";
+import Footer from "../widgets/Footer";
 
 const App: React.FC = () => {
   return (
+    <div>
+      <NavMenu />
         <Router>
           <main>
             {/* App's Routes */}
@@ -17,6 +22,8 @@ const App: React.FC = () => {
             </Routes>
           </main>
         </Router>
+        <Footer />
+      </div>
   );
 };
 

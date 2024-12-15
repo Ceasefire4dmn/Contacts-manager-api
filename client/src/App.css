@@ -1,3 +1,38 @@
-.App {
-  text-align: center;
+
+* {
+  margin-top: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
+
+/* :root[data-theme='light'] {
+
+    --bs-body-bg: #74007a;
+    --bs-body-color: #8e008c;
+  --bs-primary: #8c008e;
+   
+  --bs-light: #8500a0; 
+  --bs-navbar-bg: #a30096; 
+  
+}
+
+:root[data-theme='dark'] {
+    --bs-body-bg: #348243;
+    --bs-primary: #4CAF50;
+     --bs-body-color: #212529;
+}
+
+[data-bs-theme=dark] {
+    --bs-body-bg: #348243;
+    --bs-primary: #4CAF50;
+     --bs-body-color: #212529;
+}
+
+[data-bs-theme=light] {
+    --bs-body-bg: #74007a;
+    --bs-body-color: #8e008c;
+  --bs-primary: #8c008e;
+   
+  --bs-light: #8500a0; 
+  --bs-navbar-bg: #a30096; 
+} */

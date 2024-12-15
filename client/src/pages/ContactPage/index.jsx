@@ -3,7 +3,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "../../widgets/Header";
 import FormButton from "../../shared/ui/Button/FormButton";
 import TableContact from "./ui/TableContact";
+import NavMenu from "../../widgets/NavMenu";
 import { getContacts, addContact, deleteContact } from "../../shared/api/contacts";
+import "../../App.css";
 
 const baseApiUrl = process.env.REACT_APP_API_URL;
 // url on base controller of the api
@@ -41,25 +43,28 @@ function ContactListPage() {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="card">
-        {/* Header */}
-        <Header />
+    <div>
+      <div className="lg-container m-4">
 
-        {/* Contacts */}
-        <div className="card-body">
-          <TableContact
-            contacts={contacts}
-            // drilling handleDeleteContact method into TableContact and then calling it from RowContact
-            deleteContact={handleDeleteContact}
-          />
+        <div className="card">
+          {/* Header */}
+          <Header />
 
-          {/* Button for adding contact */}
-          <FormButton
-            margin={"mt-3"}
-            addContact={handleAddContact}
-            btnTextBefore={"Добавить контакт"}
-          />
+          {/* Contacts */}
+          <div className="card-body">
+            <TableContact
+              contacts={contacts}
+              // drilling handleDeleteContact method into TableContact and then calling it from RowContact
+              deleteContact={handleDeleteContact}
+            />
+
+            {/* Button for adding contact */}
+            <FormButton
+              margin={"mt-3"}
+              addContact={handleAddContact}
+              btnTextBefore={"Добавить контакт"}
+            />
+          </div>
         </div>
       </div>
     </div>
