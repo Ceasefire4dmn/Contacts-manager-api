@@ -17,7 +17,7 @@ const About = () => {
                     What to say about me!
                 </div>
             </div>
-            <div>
+            <div className="d-flex justify-content-center">
                 <img src={woman} alt="DDD" className={'m-5'} style={{maxHeight: '300px'}}/>
                 <img src={icecream} alt="DDD" className={'m-3'} style={{ maxHeight: '300px' }} />
                 <img src={sing} alt="DDD" className={'m-3'} style={{ maxHeight: '300px' }} />

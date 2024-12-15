@@ -9,6 +9,8 @@ const ContactCreationForm = (props) => {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [email, setEmail] = useState("");
 
+    const [addingLog, setOperation] = useState("");
+
     // Handle creation new contact after submitting the Button "Создать контакт"
     //Check if fields are properly filled 
     const handleSubmit = (event) => {
@@ -27,6 +29,7 @@ const ContactCreationForm = (props) => {
             setEmail("");
 
             props.visible();
+            setOperation("Контакт удачно добавлен!");
         }
     };
 
@@ -34,7 +37,7 @@ const ContactCreationForm = (props) => {
         // Contact creation form
         <div
             className="mt-4"
-            style={{width: "40%"}}    
+            style={{ width: "40%" }}
         >
             <form
                 onSubmit={handleSubmit}
@@ -96,6 +99,12 @@ const ContactCreationForm = (props) => {
                     Создать контакт
                 </button>
             </form>
+            {
+                addingLog && 
+                            <div className="mt-4 card p-3">
+                                {addingLog}
+                            </div>
+            }
         </div>
     );
 };

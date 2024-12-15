@@ -34,11 +34,22 @@ const CreateContactPage = () => {
     };
     return (
         <div className="m-5 p-5">
-            <span className='' style={{ display: 'flex' }}>
-            <p className="display-4">Создать новый контакт</p>
-            <ContactCreationForm submitted={handleAddContact} visible={() => {}}
-            />
-            <img src={paint} alt="Paint image" className={'m-5'} style={{ maxHeight: '300px' }} />
+            <span
+                style={{ display: 'flex', alignItems: 'center' }}
+            >
+                <p className="display-4">
+                    Создать новый контакт
+                </p>
+                <ContactCreationForm
+                    submitted={handleAddContact}
+                    visible={() => { }}
+                />
+                <img
+                    src={paint}
+                    alt="Paint image"
+                    className={'m-5'}
+                    style={{ maxHeight: '300px' }}
+                />
             </span>
         </div>
     );

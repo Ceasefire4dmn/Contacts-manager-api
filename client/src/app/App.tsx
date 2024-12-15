@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ContactListPage from "../pages/ContactPage";
 import About from "../pages/AboutPage/index";
 import CreateContactPage from "../pages/CreateContactPage";
+import DeleteContactPage from "../pages/DeleteContactPage";
 // Components
 import NavMenu from "../widgets/NavMenu";
 import Footer from "../widgets/Footer";
@@ -20,6 +21,7 @@ const App: React.FC = () => {
             <Routes>
               <Route path="/contacts" element={<ContactListPage />} />
               <Route path="/contacts/createContact" element={<CreateContactPage />} />
+              <Route path="/contacts/deleteContact" element={<DeleteContactPage />} />
               <Route path="/about" element={<About />} />
             </Routes>
           </main>
