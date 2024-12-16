@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { getContacts, deleteContact } from "../../shared/api/contacts";
+import React, { useState } from "react";
+import useContacts from "../../shared/hooks/useContacts";
 import deletePcs from "./pics/delete.png";
 import callPcs from "./pics/call.png";
 
@@ -10,26 +10,11 @@ const DeleteContactPage = () => {
     // url on contacts storage
     const contactsUrl = `${baseApiUrl}/contacts`;
 
-    // dynamic update contacts in the list by using useState hook
-    const [contacts, setContacts] = useState([]);
-    const [deletingLog, setOperation] = useState("");
+    // dynamic update variables in the list by using useState hook
+    const [deletingLog, setOperation] = useState(["", 2]);
     const [id, setId] = useState();
 
-    // Fetch contacts from the API when the component mounts and update the state with the fetched data.
-    useEffect(() => {
-        getContacts(contactsUrl)
-            .then((data) => setContacts(data))
-            .catch((err) => {
-                console.error(err.response.data);
-            });
-    }, []); // Empty dependency array ensures the effect runs only once, when the component mounts.
-
-    // handleDeleteContact - handle deleting contact on client side after calling deleteContact method for api request. Used by RowContact through props drilling
-    const handleDeleteContact = (contactId) => {
-        deleteContact(contactsUrl, contactId);
-
-        setContacts(contacts.filter((contact) => contact.id !== contactId));
-    };
+    const { contacts, handleDeleteContact, error } = useContacts(contactsUrl);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -37,25 +22,25 @@ const DeleteContactPage = () => {
 
         if (contact) {
             // Контакт найден, выполняем удаление
-            await setOperation(`Контакт ${contact.name} успешно удален!`);
+            await setOperation([`Контакт ${contact.name} успешно удален!`, 0]);
             handleDeleteContact(id);
         } else {
             // Контакт не найден
-            setOperation("Такого пользователя не существует или введен неверный ID.");
+            setOperation(["Такого пользователя не существует или введен неверный ID.", 1]);
         }
     }
 
     return (
         <div
-            style={{ 
-                justifyContent: 'space-evenly', 
-                display: 'flex', 
-                alignItems: 'center' 
+            style={{
+                justifyContent: 'space-evenly',
+                display: 'flex',
+                alignItems: 'center'
             }}
         >
             <div
                 className="card p-4 m-4"
-                style={{ width: "40%"}}
+                style={{ width: "40%" }}
             >
                 <p className="display-4">
                     Удаление контакта
@@ -87,18 +72,31 @@ const DeleteContactPage = () => {
                     >
                         Удалить контакт
                     </button>
+                
                 </form>
                 {
-                    deletingLog &&
-                    <div className="mt-4 card p-3">
-                        {deletingLog}
+                    !error && deletingLog[1] === 1 &&
+                    <div className="mt-4 alert alert-danger">
+                        {deletingLog[0]}
+                    </div>
+                }
+                {
+                    !error && deletingLog[1] === 0 &&
+                    <div className="mt-4 alert alert-success">
+                        {deletingLog[0]}
+                    </div>
+                }
+                {
+                error && 
+                    <div className="alert alert-danger mt-4">
+                        {error}    
                     </div>
                 }
 
                 <img
                     src={callPcs}
                     alt="Call image"
-                    style={{ maxHeight: '500px' }}
+                    style={{ maxHeight: '300px', marginTop: '20px' }}
                 />
             </div>
             <img 
@@ -107,7 +105,7 @@ const DeleteContactPage = () => {
                 style={{ maxHeight: '500px' }}    
             />
         </div>
-    );
+            );
 }
 
-export default DeleteContactPage;
+            export default DeleteContactPage;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import useContacts from "../shared/hooks/useContacts";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Component handle creation of contacts and defines is visible contact creation form or not. 
@@ -10,7 +11,8 @@ const ContactCreationForm = (props) => {
     const [email, setEmail] = useState("");
 
     const [addingLog, setOperation] = useState("");
-
+    const { error } = useContacts();
+    
     // Handle creation new contact after submitting the Button "Создать контакт"
     //Check if fields are properly filled 
     const handleSubmit = (event) => {
@@ -100,7 +102,7 @@ const ContactCreationForm = (props) => {
                 </button>
             </form>
             {
-                addingLog && 
+                !error && addingLog && 
                             <div className="mt-4 card p-3">
                                 {addingLog}
                             </div>
