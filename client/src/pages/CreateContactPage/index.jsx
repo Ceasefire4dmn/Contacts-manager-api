@@ -24,6 +24,7 @@ const CreateContactPage = () => {
                 </p>
                 
                     {error && <div className="alert alert-danger">{error}</div>}
+
                 </span>    
                 <ContactCreationForm
                         submitted={handleAddContact}
