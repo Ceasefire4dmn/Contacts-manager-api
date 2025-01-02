@@ -9,7 +9,7 @@ builder.Services.AddCors(opt =>
     {
         policy.AllowAnyHeader()
         .AllowAnyMethod()
-        .WithOrigins(args[0]);
+        .WithOrigins(args[0], args[1]);
         // .WithOrigins("http://localhost:3000");
         // The first flag(argument) after "dotnet run" will be the link to the resourse that can get information from the API. Example for localhost:3000:
         // dotnet run "http://localhost:3000"

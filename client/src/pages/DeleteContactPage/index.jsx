@@ -95,13 +95,13 @@ const DeleteContactPage = () => {
 
                 <img
                     src={callPcs}
-                    alt="Call image"
+                    alt="Call pic"
                     style={{ maxHeight: '300px', marginTop: '20px' }}
                 />
             </div>
             <img 
                 src={deletePcs} 
-                alt="Delete image" 
+                alt="Delete pic" 
                 style={{ maxHeight: '500px' }}    
             />
         </div>

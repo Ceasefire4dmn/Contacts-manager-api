@@ -33,7 +33,7 @@ const CreateContactPage = () => {
                 
                 <img
                     src={paint}
-                    alt="Paint image"
+                    alt="Paint picture"
                     className={'m-5'}
                     style={{ maxHeight: '300px' }}
                 />
