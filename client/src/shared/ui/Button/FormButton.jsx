@@ -1,15 +1,13 @@
-import { React, useState } from "react";
+import React  from "react";
+import useVisibility from "../../hooks/useVisibility";
 import ContactCreationForm from "../../../features/ContactCreationForm";
 import Button from "./Button";
 
 const FormButton = ({ style, margin, addContact, btnTextBefore, btnTextAfter }) => {
-    const [isFormVisible, setIsFormVisible] = useState(false);
 
-    const toggleFormVisibility = () => {
-        setIsFormVisible(!isFormVisible);
-    };
+    const { isVisible, toggle } = useVisibility();
 
-    const buttonText = isFormVisible
+    const buttonText = isVisible
         ? (btnTextAfter || "Отменить")
         : (btnTextBefore || "Добавить")
 
@@ -18,15 +16,15 @@ const FormButton = ({ style, margin, addContact, btnTextBefore, btnTextAfter }) 
             <Button
                 style={style}
                 margin={margin}
-                btnFunction={toggleFormVisibility}
+                btnFunction={toggle}
             >
                 {buttonText}
             </Button>
 
-            {isFormVisible && (
+            {isVisible && (
                 <ContactCreationForm
                     submitted={addContact}
-                    visible={toggleFormVisibility}
+                    visible={toggle}
                 />
             )}
         </div>

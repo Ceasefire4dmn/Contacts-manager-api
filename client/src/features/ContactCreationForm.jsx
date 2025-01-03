@@ -5,8 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // Component handle creation of contacts and defines is visible contact creation form or not. 
 const ContactCreationForm = (props) => {
     const baseApiUrl = process.env.REACT_APP_API_URL;
-        // url on contacts storage
-        const contactsUrl = `${baseApiUrl}/contacts`;
+    // url on contacts storage
+    const contactsUrl = `${baseApiUrl}/contacts`;
     // Handle dynamic filling and empting properties of contacts by using useState hooks
     const [name, setName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");

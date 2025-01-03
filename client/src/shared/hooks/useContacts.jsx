@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getContacts, addContact, deleteContact } from "../api/contacts";
+import { getContacts, addContact, deleteContact, updateContact } from "../api/contacts";
 
 const useContacts = (contactsUrl) => {
     const [contacts, setContacts] = useState([]);
@@ -34,7 +34,15 @@ const useContacts = (contactsUrl) => {
         }
     };
 
-    return { contacts, handleAddContact, handleDeleteContact, error };
+    const handleUpdateContact = async (contactId, updatedContact) => {
+        try {
+            await updateContact(contactsUrl, contactId, updatedContact);
+            setContacts(contacts.filter((contact) => contact.id !== contactId));
+        } catch (err) {
+            setError(err.response?.data || "Ошибка при изменении контакта");
+    }
+    }
+    return { contacts, handleAddContact, handleDeleteContact, handleUpdateContact, error };
 };
 
 export default useContacts;
