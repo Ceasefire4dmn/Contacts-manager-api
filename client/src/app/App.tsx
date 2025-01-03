@@ -7,6 +7,7 @@ import ContactListPage from "../pages/ContactPage";
 import About from "../pages/AboutPage/index";
 import CreateContactPage from "../pages/CreateContactPage";
 import DeleteContactPage from "../pages/DeleteContactPage";
+import UpdateContactPage from "../pages/UpdateContactPage";
 // Components
 import NavMenu from "../widgets/NavMenu";
 import Footer from "../widgets/Footer";
@@ -22,6 +23,7 @@ const App: React.FC = () => {
               <Route path="/contacts" element={<ContactListPage />} />
               <Route path="/contacts/createContact" element={<CreateContactPage />} />
               <Route path="/contacts/deleteContact" element={<DeleteContactPage />} />
+              <Route path="/contacts/updateContact" element={<UpdateContactPage />} />
               <Route path="/about" element={<About />} />
             </Routes>
           </main>

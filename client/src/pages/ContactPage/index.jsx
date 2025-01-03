@@ -13,7 +13,7 @@ function ContactListPage() {
   // url on contacts storage
   const contactsUrl = `${baseApiUrl}/contacts`;
 
-  const { contacts, handleAddContact, handleDeleteContact, error } = useContacts(contactsUrl);
+  const { contacts, handleAddContact, handleDeleteContact, handleUpdateContact, error } = useContacts(contactsUrl);
 
   return (
     <div>

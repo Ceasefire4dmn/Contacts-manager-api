@@ -1,7 +1,13 @@
 import React, { useState } from "react";
+import  useVisibility from "../shared/hooks/useVisibility";
+import ContactUpdatingForm from "../features/ContactUpdatingForm";
 import Button from "../shared/ui/Button/Button";
+import Modal from 'react-bootstrap/Modal';
+
 
 const Contact = (props) => {
+
+    const { isVisible, show, hide } = useVisibility();
 
     const [displayId, setDisplayId] = useState(`${props.ContactId}`.slice(0, 2));
 
@@ -36,12 +42,31 @@ const Contact = (props) => {
             <th>
                 <Button
                     style={"btn-outline-success"}
+                    btnFunction={() => show()}
+                >
+                    &#x270F;
+                </Button>
+
+                <Button
+                    style={"btn-outline-danger"}
                     btnFunction={() => props.deleteContact(props.ContactId)}
                 >
                     &#x1F5D1;
                 </Button>
             </th>
+            <Modal 
+                style={{margin: "auto", alignContent: "center", }}
+                show={isVisible} 
+                onHide={() => hide()}
+                onSubmit={() => hide()}>
+                <ContactUpdatingForm contact={{id: props.ContactId, 
+                                               name: props.ContactName, 
+                                               phoneNumber: props.ContactPhoneNumber, 
+                                               email: props.ContactEmail}}/>
+            </Modal>
         </tr>
+
+        
     );
 };
 

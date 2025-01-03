@@ -35,6 +35,7 @@ function TableContact(props) {
                             // Methods
                             // deleteContact - handle deleting contact. This method will be called from RowContact through props drilling
                             deleteContact={props.deleteContact}
+
                         />) : []
                 }
 
