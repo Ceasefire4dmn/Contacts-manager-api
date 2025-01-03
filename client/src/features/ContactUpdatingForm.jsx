@@ -14,19 +14,21 @@ const ContactUpdatingForm = ( props ) => {
     const [formData, setFormData] = useState({
         name: "",
         email: "",
-        phone: "",
+        phoneNumber: "",
     });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
+        console.log(name, value, formData);
     };
 
     const handleSubmit = (e) => {
-        // e.preventDefault();
+        e.preventDefault();
         console.log("Form submitted:", formData);
         handleUpdateContact(props.contact.id, formData);
 
@@ -34,13 +36,23 @@ const ContactUpdatingForm = ( props ) => {
         setFormData({
             name: "",
             email: "",
-            phone: "",
+            phoneNumber: "",
         });
     };
 
     return (
-        <div style={{display: "flex", flexDirection: "column", padding: "20px",   gap: "30px", justifyContent: "center"}}>
-            <h1 className="text-success" style={{textAlign: "center"}}>Changing Contact <br/> {props.contact.name}</h1>
+        <div style={{display: "flex", 
+                    flexDirection: "column", 
+                    padding: "20px",   
+                    gap: "30px", 
+                    justifyContent: "center"
+                    }}>
+            <h1 className="text-success" 
+                style={{textAlign: "center"}}
+            >
+                    Changing Contact <br/> 
+                    { props.contact.name }
+            </h1>
             <Form onSubmit={handleSubmit}>
                 <Accordion defaultActiveKey="0">
                     <Form.Group className="mb-3" controlId="formBasicName">
@@ -81,8 +93,8 @@ const ContactUpdatingForm = ( props ) => {
                                 />
                                 <Form.Label>Phone number</Form.Label>
                                 <Form.Control type="phone" 
-                                              name="phone"
-                                              value={formData.phone}
+                                              name="phoneNumber"
+                                              value={formData.phoneNumber}
                                               onChange={handleChange}
                                               placeholder="Enter new phone number"
                                               />
@@ -118,10 +130,16 @@ const ContactUpdatingForm = ( props ) => {
                     </Form.Group>
 
             
-                <Button variant="btn btn-success" type="submit">
-                    Обновить контакт
-                </Button></Accordion>
-                {error && <div className="alert alert-danger mt-4">{error}</div>}
+                    <Button variant="btn btn-success" type="submit">
+                        Обновить контакт
+                    </Button>
+                </Accordion>
+                {
+                    error && 
+                    <div className="alert alert-danger mt-4">
+                        {error}
+                    </div>
+                }
             </Form>
         </div>
     );

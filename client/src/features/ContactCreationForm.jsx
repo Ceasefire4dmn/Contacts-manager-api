@@ -8,9 +8,23 @@ const ContactCreationForm = (props) => {
     // url on contacts storage
     const contactsUrl = `${baseApiUrl}/contacts`;
     // Handle dynamic filling and empting properties of contacts by using useState hooks
-    const [name, setName] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [email, setEmail] = useState("");
+    
+    
+    
+        const [formData, setFormData] = useState({
+            name: "",
+            email: "",
+            phoneNumber: "",
+        });
+    
+        const handleChange = (e) => {
+            const { name, value } = e.target;
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: value,
+            }));
+        };
+    
 
     const [addingLog, setOperation] = useState("");
     const { error } = useContacts(contactsUrl);
@@ -20,17 +34,14 @@ const ContactCreationForm = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        if (name !== "" && phoneNumber !== "" && email !== "") {
-            props.submitted({
-                id: crypto.randomUUID(),
-                name: name,
-                phoneNumber: phoneNumber,
-                email: email,
-            });
+        if (formData.name !== "" && formData.phoneNumber !== "" && formData.email !== "") {
+            props.submitted(formData);
 
-            setName("");
-            setPhoneNumber("");
-            setEmail("");
+            setFormData({
+                name: "",
+                email: "",
+                phoneNumber: "",
+            });
 
             props.visible();
             setOperation("Контакт удачно добавлен!");
@@ -56,9 +67,10 @@ const ContactCreationForm = (props) => {
                     <input
                         type="text"
                         className="form-control"
+                        name="name"
                         id="name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={formData.name}
+                        onChange={handleChange}
                         required={true}
                     />
                 </div>
@@ -72,8 +84,9 @@ const ContactCreationForm = (props) => {
                         type="text"
                         className="form-control"
                         id="phoneNumber"
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        name="phoneNumber"
+                        value={formData.phoneNumber}
+                        onChange={handleChange}
                         required={true}
                     />
                 </div>
@@ -89,8 +102,9 @@ const ContactCreationForm = (props) => {
                         type="email"
                         className="form-control"
                         id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
                         required={true}
                     />
                 </div>

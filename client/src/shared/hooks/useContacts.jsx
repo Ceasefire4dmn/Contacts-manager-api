@@ -5,20 +5,26 @@ const useContacts = (contactsUrl) => {
     const [contacts, setContacts] = useState([]);
     const [error, setError] = useState(null);
 
-    // Fetch контактов
-    useEffect(() => {
+    // Fetch контактов\
+
+    const fetchContacts = async () => {
         getContacts(contactsUrl)
             .then((data) => setContacts(data))
             .catch((err) => {
                 setError(err.response?.data || "Ошибка при загрузке контактов");
             });
-    }, [contactsUrl]);
+    };
+
+    useEffect(() => {
+        fetchContacts();
+    }, []);
 
     // Добавить контакт
     const handleAddContact = async (newContact) => {
         try {
             const addedContact = await addContact(contactsUrl, newContact);
             setContacts([...contacts, addedContact]);
+            fetchContacts();
         } catch (err) {
             setError(err.response?.data || "Ошибка при добавлении контакта");
         }
@@ -29,6 +35,7 @@ const useContacts = (contactsUrl) => {
         try {
             await deleteContact(contactsUrl, contactId);
             setContacts(contacts.filter((contact) => contact.id !== contactId));
+            fetchContacts();
         } catch (err) {
             setError(err.response?.data || "Ошибка при удалении контакта");
         }
@@ -38,6 +45,7 @@ const useContacts = (contactsUrl) => {
         try {
             await updateContact(contactsUrl, contactId, updatedContact);
             setContacts(contacts.filter((contact) => contact.id !== contactId));
+            fetchContacts();
         } catch (err) {
             setError(err.response?.data || "Ошибка при изменении контакта");
     }

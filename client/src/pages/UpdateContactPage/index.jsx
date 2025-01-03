@@ -96,7 +96,10 @@ const UpdateContactPage = () => {
             <Modal style={{ margin: "auto", alignContent: "center", }}
                 show={isVisible}
                 onHide={() => hide()}
-                onSubmit={() => hide()}>
+                onSubmit={() => {
+                        setOperation(["Контакт успешно сохранен", 0]);
+                        hide()
+                    }}>
                 <ContactUpdatingForm contact={contactForUpdate} />
             </Modal>
         </div>
