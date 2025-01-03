@@ -9,7 +9,7 @@ builder.Services.AddCors(opt =>
     {
         policy.AllowAnyHeader()
         .AllowAnyMethod()
-        .WithOrigins(args[0], args[1]);
+        .WithOrigins(args[0]);
         // .WithOrigins("http://localhost:3000");
         // The first flag(argument) after "dotnet run" will be the link to the resourse that can get information from the API. Example for localhost:3000:
         // dotnet run "http://localhost:3000"
@@ -34,7 +34,7 @@ builder.Services.AddSwaggerGen(opt =>
 builder.Services.AddEndpointsApiExplorer();
 
 //Add option for using Singleton project pattern
-builder.Services.AddSingleton<ContactStorage>();
+builder.Services.AddSingleton<IStorage, SqliteStorage>();
 
 //Build app
 var app = builder.Build();

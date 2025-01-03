@@ -1,9 +1,11 @@
 using Bogus;
-public class ContactStorage
+
+
+public class InMemoryStorage : IStorage
 {
     private List<Contact> Contacts;
 
-    public ContactStorage()
+    public InMemoryStorage()
     {
         this.Contacts = new List<Contact>();
 
