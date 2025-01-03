@@ -2,7 +2,11 @@ using Microsoft.Data.Sqlite;
 using System.Text;
 public class SqliteStorage : IStorage
 {
-    static private readonly string connectionString = "Data Source=contacts.db";
+    private readonly string connectionString;
+    public SqliteStorage(string connectionString)
+    {
+        this.connectionString = connectionString;
+    }
     public bool CreateContact(Contact contact)
     {
         using var connection = new SqliteConnection(connectionString);

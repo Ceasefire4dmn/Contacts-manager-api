@@ -3,13 +3,14 @@ var builder = WebApplication.CreateBuilder(args);
 //Add option for creating controllers
 builder.Services.AddControllers();
 
+var stringConnection = builder.Configuration.GetConnectionString("SqliteConnection");
 //Add option for Cross-Origin Request handling
 builder.Services.AddCors(opt =>
     opt.AddPolicy("CorsPolicy", policy =>
     {
         policy.AllowAnyHeader()
         .AllowAnyMethod()
-        .WithOrigins(args[0]);
+        .WithOrigins([builder.Configuration["clientHost"]]);
         // .WithOrigins("http://localhost:3000");
         // The first flag(argument) after "dotnet run" will be the link to the resourse that can get information from the API. Example for localhost:3000:
         // dotnet run "http://localhost:3000"
@@ -34,7 +35,7 @@ builder.Services.AddSwaggerGen(opt =>
 builder.Services.AddEndpointsApiExplorer();
 
 //Add option for using Singleton project pattern
-builder.Services.AddSingleton<IStorage, SqliteStorage>();
+builder.Services.AddSingleton<IStorage>(new SqliteStorage(stringConnection));
 
 //Build app
 var app = builder.Build();
