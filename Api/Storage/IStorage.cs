@@ -1,7 +1,7 @@
 
 public interface IStorage
 {
-    bool CreateContact(Contact contact);
+    Contact CreateContact(ContactDto contact);
     List<Contact> GetAllContacts();
     (bool, Contact) GetContactById(string id);
     bool DeleteContact(Guid id);

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 public class ContactManagementController : BaseController
 {
+    private static readonly string baseUrl = Environment.GetEnvironmentVariable("CONTACT_API");
     private readonly IStorage Storage;
     public ContactManagementController(IStorage Storage)
     {
@@ -9,10 +10,11 @@ public class ContactManagementController : BaseController
     }
 
     [HttpPost("contacts")]
-    public IActionResult CreateContact([FromBody] Contact contact)
+    public IActionResult CreateContact([FromBody] ContactDto contact)
     {
-        return Storage.CreateContact(contact)
-            ? Created($"http://localhost:5000/api/ContactManagement/contacts/{contact.Id}", contact)
+        Contact CreatedContact = Storage.CreateContact(contact);
+        return CreatedContact != null
+            ? Created($"{baseUrl}{CreatedContact.Id}", CreatedContact)
             : Conflict($"Произошла ошибка при добавлении контакта {contact.Name}");
     }
 

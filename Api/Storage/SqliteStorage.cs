@@ -1,3 +1,4 @@
+using Bogus.DataSets;
 using Microsoft.Data.Sqlite;
 using System.Text;
 public class SqliteStorage : IStorage
@@ -7,14 +8,20 @@ public class SqliteStorage : IStorage
     {
         this.connectionString = connectionString;
     }
-    public bool CreateContact(Contact contact)
+    public Contact CreateContact(ContactDto contact)
     {
         using var connection = new SqliteConnection(connectionString);
         connection.Open();
 
         var command = connection.CreateCommand();
 
-        string query = "INSERT INTO Contacts (contact_name, contact_phone_number, contact_email) VALUES (@name, @phoneNumber, @email)";
+        string query = @"
+            INSERT INTO contacts(contact_name, contact_phone_number, contact_email) VALUES (@name, @phoneNumber, @email); 
+            
+            SELECT contact_id, contact_name, contact_phone_number, contact_email 
+            FROM contacts 
+            WHERE ROWID = last_insert_rowid();
+        ";
 
         command.CommandText = query;
 
@@ -22,8 +29,21 @@ public class SqliteStorage : IStorage
         command.Parameters.AddWithValue("@phoneNumber", contact.PhoneNumber);
         command.Parameters.AddWithValue("@email", contact.Email);
 
+        using var reader = command.ExecuteReader();
 
-        return command.ExecuteNonQuery() > 0;
+        if (reader.Read())
+        {
+            // Создание объекта Contact из результата запроса
+            return new Contact
+            {
+                Id = Guid.Parse(reader.GetString(0)),
+                Name = reader.GetString(1),
+                PhoneNumber = reader.GetString(2),
+                Email = reader.GetString(3)
+            };
+        }
+        
+        return null;
     }
     public List<Contact> GetAllContacts()
     {

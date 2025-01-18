@@ -22,34 +22,30 @@ public class InMemoryStorage : IStorage
         }
     }
 
-    public bool CreateContact(Contact contact)
+    public Contact CreateContact(ContactDto contact)
     {
-        Guid potentialId = Guid.NewGuid();
-        while(Contacts.FirstOrDefault(c => c.Id == potentialId) != null) 
-        {
-            potentialId = Guid.NewGuid();
-        }
-        contact.Id = potentialId;
+        var CreatedContact = new Contact();
 
-        if (string.IsNullOrWhiteSpace(contact.Name))
-        {
-            contact.Name = $"Unknown.{DateTime.Now}";
-        }
+        CreatedContact.Id = Guid.NewGuid(); ;
 
-        if (string.IsNullOrWhiteSpace(contact.Email))
-        {
-            contact.Email = "Unknown";
-        }
+        CreatedContact.Name = 
+                            string.IsNullOrWhiteSpace(contact.Name) 
+                            ? $"Unknown.{DateTime.Now}"
+                            : contact.Name;
 
-        if (string.IsNullOrWhiteSpace(contact.PhoneNumber))
-        {
-            contact.PhoneNumber = "Unknown";
-        }
+        CreatedContact.Email = 
+                             string.IsNullOrWhiteSpace(contact.Email)
+                             ? "Unknown"
+                             : contact.Email;
 
-        Contacts.Add(contact);
+        CreatedContact.PhoneNumber =
+                                   string.IsNullOrWhiteSpace(contact.PhoneNumber)
+                                   ? "Unknown"
+                                   : contact.PhoneNumber;
+        
+        Contacts.Add(CreatedContact);
 
-        return true;
-
+        return CreatedContact;
     }
 
     public List<Contact> GetAllContacts()
@@ -63,8 +59,8 @@ public class InMemoryStorage : IStorage
     {
         bool IsGuid = Guid.TryParse(id, out Guid potentialId);
 
-        return IsGuid 
-            ? (IsGuid, Contacts.FirstOrDefault(c => c.Id == potentialId)) 
+        return IsGuid
+            ? (IsGuid, Contacts.FirstOrDefault(c => c.Id == potentialId))
             : (IsGuid, null);
     }
     public bool DeleteContact(Guid id)
