@@ -1,4 +1,3 @@
-using Bogus.DataSets;
 using Microsoft.Data.Sqlite;
 using System.Text;
 public class SqliteStorage : IStorage
@@ -69,9 +68,9 @@ public class SqliteStorage : IStorage
 
         return contacts;
     }
-    public (bool, Contact) GetContactById(string id)
+    public (bool, Contact) GetContactById(Guid id)
     {
-        if (!Guid.TryParse(id, out _))
+        if (!Guid.TryParse(id.ToString(), out _))
             return (false, null);
 
         using var connection = new SqliteConnection(connectionString);

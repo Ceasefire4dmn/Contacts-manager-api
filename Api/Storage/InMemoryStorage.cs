@@ -55,9 +55,10 @@ public class InMemoryStorage : IStorage
         return Contacts;
     }
 
-    public (bool, Contact) GetContactById(string id)
+    public (bool, Contact) GetContactById(Guid id)
     {
-        bool IsGuid = Guid.TryParse(id, out Guid potentialId);
+        // bool IsGuid = Guid.TryParse(id, out Guid potentialId);
+        bool IsGuid = Guid.TryParse(id.ToString(), out Guid potentialId);
 
         return IsGuid
             ? (IsGuid, Contacts.FirstOrDefault(c => c.Id == potentialId))

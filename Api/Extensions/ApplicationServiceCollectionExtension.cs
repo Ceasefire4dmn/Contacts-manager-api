@@ -1,10 +1,22 @@
+using Microsoft.EntityFrameworkCore;
+
+
 public static class ApplicationServiceCollectionExtension
 {
     public static IServiceCollection AddServiceCollection(this IServiceCollection services, ConfigurationManager configuration)
     {
-        //Add option for creating controllers
+        // Add option for creating controllers
         services.AddControllers();
-        //Add option for Cross-Origin Request handling
+
+        // Add DB via EF
+        var stringConnection = configuration.GetConnectionString("SqliteConnection");
+        services.AddDbContext<SqliteDbContext>(opt => opt.UseSqlite(stringConnection));
+        services.AddScoped<IStorage, SqliteEfStorage>();
+        // Replace option for using Singleton project pattern with DB Context via Entity Framework
+        // services.AddSingleton<IStorage>(new SqliteStorage(configuration.GetConnectionString("SqliteConnection")));
+        
+        
+        // Add option for Cross-Origin Request handling
         services.AddCors(opt =>
             opt.AddPolicy("CorsPolicy", policy =>
             {
@@ -15,7 +27,7 @@ public static class ApplicationServiceCollectionExtension
             }
         ));
 
-        //Add autodocumentation option using Swagger 
+        // Add autodocumentation option using Swagger 
         services.AddSwaggerGen(opt =>
         {
             opt.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -32,8 +44,7 @@ public static class ApplicationServiceCollectionExtension
         });
         services.AddEndpointsApiExplorer();
 
-        //Add option for using Singleton project pattern
-        services.AddSingleton<IStorage>(new SqliteStorage(configuration.GetConnectionString("SqliteConnection")));
+        
 
         return services;
     }

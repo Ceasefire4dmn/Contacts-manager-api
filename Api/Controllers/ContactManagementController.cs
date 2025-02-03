@@ -29,7 +29,7 @@ public class ContactManagementController : BaseController
     }
 
     [HttpGet("contacts/{id}")]
-    public IActionResult GetContactById(string id)
+    public IActionResult GetContactById(Guid id)
     {
         (bool IsGuid, Contact contact) =  Storage.GetContactById(id);
 
